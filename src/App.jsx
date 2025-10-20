@@ -4,7 +4,7 @@ export default function BorderlessByDesignLanding() {
   const [status, setStatus] = useState("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
-  const FORM_ENDPOINT = "https://formspree.io/f/xwprzbyn";
+  const FORM_ENDPOINT = "https://formspree.io/f/mgvnbazk";
 
   async function handleSubmit(e) {
     e.preventDefault();
