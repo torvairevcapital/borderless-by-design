@@ -116,12 +116,26 @@ export default function BorderlessByDesignLanding() {
           {status === "error" && <p className="mt-4 text-sm text-red-300">{errorMsg}</p>}
 
           {status === "success" && (
-            <div className="mt-6 rounded-3xl ring-1 ring-white/10 bg-zinc-900 p-6 max-w-xl">
-              <h3 className="text-lg font-semibold text-amber-300">Check your inbox</h3>
-              <p className="mt-2 text-sm text-slate-300">We just sent your preview. Didn’t get it? Check spam/promotions or click below to download directly.</p>
-              <a href="/preview/Borderless-by-Design-Preview.pdf" target="_blank" className="mt-4 inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-medium ring-1 ring-white/15 bg-white/5 hover:bg-white/10">Download Preview</a>
-            </div>
-          )}
+  <div className="mt-6 rounded-3xl ring-1 ring-white/10 bg-zinc-900 p-6 max-w-xl text-center">
+    <h3 className="text-xl font-semibold text-amber-300">Instant access ready</h3>
+    <p className="mt-3 text-sm text-slate-300">
+      Thank you for joining <span className="text-amber-400">Borderless by Design</span>.
+      Your free preview is ready — download it instantly below.
+    </p>
+    <a
+      href="/preview/Borderless-by-Design-Preview.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="mt-5 inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-medium ring-1 ring-white/15 bg-gradient-to-b from-amber-400 to-amber-600 text-black hover:from-amber-500 hover:to-amber-700 transition"
+    >
+      Download Preview Now
+    </a>
+    <p className="mt-3 text-xs text-slate-500">
+      (You’ll also receive a confirmation email shortly.)
+    </p>
+  </div>
+)}
+
         </div>
       </section>
 
