@@ -118,14 +118,12 @@ export default function BorderlessLanding() {
             Inside Borderless Blueprint
           </h2>
 
-          <div className="mt-8 flex justify-center">
-            {/* Place your snapshot at: public/preview/Borderless-Blueprint-Snapshot.jpg */}
-            <img
-              src="/preview/Borderless-Blueprint-Snapshot.jpg"
-              alt="Borderless Blueprint preview snapshot"
-              className="rounded-xl ring-1 ring-white/10 max-w-3xl shadow-2xl"
-            />
-          </div>
+<img
+  src="/preview/Borderless-Blueprint-Snapshot.jpg"
+  alt="Borderless Blueprint preview snapshot"
+  className="w-full max-w-3xl h-auto rounded-xl ring-1 ring-white/10 shadow-2xl object-contain px-4 sm:px-0 transition-transform duration-500 hover:scale-[1.01]"
+/>
+
 
           <p className="mt-6 text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed">
             A glimpse into the full framework—offshore setup, asset protection, and the
