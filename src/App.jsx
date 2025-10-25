@@ -4,35 +4,45 @@ export default function BorderlessLanding() {
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
   const [errorMsg, setErrorMsg] = useState("");
 
-  // Formspree endpoint (kept from your working setup)
+  // Formspree endpoint (your working one)
   const FORM_ENDPOINT = "https://formspree.io/f/mgvnbazk";
+  const PREVIEW_URL = "/preview/Borderless-by-Design-Preview.pdf";
 
   async function handleSubmit(e) {
     e.preventDefault();
     setStatus("submitting");
     setErrorMsg("");
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
-    try {
-      const res = await fetch(FORM_ENDPOINT, {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: formData,
-      });
-
-      if (res.ok) {
-        setStatus("success");
-        e.currentTarget.reset();
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setErrorMsg(data?.error || "Something went wrong. Please try again.");
-        setStatus("error");
-      }
-    } catch (err) {
-      setErrorMsg("Network error. Please try again.");
-      setStatus("error");
+    // ✅ Open the preview immediately in a new tab (prevents popup blockers by staying in the click stack)
+    // If the browser blocks it, fall back to same-tab navigation.
+    const win = window.open(PREVIEW_URL, "_blank", "noopener,noreferrer");
+    if (!win) {
+      // Fallback if popup blocked
+      window.location.href = PREVIEW_URL;
     }
+
+    // Fire-and-forget submission so download isn't blocked by CORS/response timing
+    fetch(FORM_ENDPOINT, {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: formData,
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data?.error || "Submission failed");
+        }
+        setStatus("success");
+        form.reset();
+      })
+      .catch(() => {
+        // Even if submission errors, user already has the preview
+        setErrorMsg("We couldn’t confirm the submission, but your preview opened.");
+        setStatus("error");
+      });
   }
 
   return (
@@ -118,12 +128,14 @@ export default function BorderlessLanding() {
             Inside Borderless Blueprint
           </h2>
 
-<img
-  src="/preview/Borderless-Blueprint-Snapshot.jpg"
-  alt="Borderless Blueprint preview snapshot"
-  className="w-full max-w-3xl h-auto rounded-xl ring-1 ring-white/10 shadow-2xl object-contain px-4 sm:px-0 transition-transform duration-500 hover:scale-[1.01]"
-/>
-
+          <div className="mt-8 flex justify-center">
+            {/* Image scales perfectly on mobile/desktop */}
+            <img
+              src="/preview/Borderless-Blueprint-Snapshot.jpg"
+              alt="Borderless Blueprint preview snapshot"
+              className="w-full max-w-3xl h-auto object-contain rounded-xl ring-1 ring-white/10 shadow-2xl px-4 sm:px-0"
+            />
+          </div>
 
           <p className="mt-6 text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed">
             A glimpse into the full framework—offshore setup, asset protection, and the
@@ -211,6 +223,7 @@ export default function BorderlessLanding() {
                   I agree to receive the preview and occasional updates. I can unsubscribe anytime.
                 </label>
               </div>
+              <input type="hidden" name="source" value="borderless-blueprint-landing" />
               <button
                 type="submit"
                 disabled={status === "submitting"}
@@ -230,19 +243,16 @@ export default function BorderlessLanding() {
               <h3 className="text-xl font-semibold text-amber-300">Instant access ready</h3>
               <p className="mt-3 text-sm text-slate-300">
                 Thank you for joining <span className="text-amber-400">Borderless Blueprint</span>. Your free
-                preview is ready—download it instantly below.
+                preview opened in a new tab. You can also grab it again below.
               </p>
               <a
-                href="/preview/Borderless-by-Design-Preview.pdf"
+                href={PREVIEW_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-5 inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-medium ring-1 ring-white/15 bg-gradient-to-b from-amber-400 to-amber-600 text-black hover:from-amber-500 hover:to-amber-700 transition"
               >
-                Download Preview Now
+                Download Preview Again
               </a>
-              <p className="mt-3 text-xs text-slate-500">
-                (You’ll also receive a confirmation email shortly.)
-              </p>
             </div>
           )}
         </div>
