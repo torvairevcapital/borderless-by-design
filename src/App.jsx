@@ -5,7 +5,7 @@ export default function BorderlessLanding() {
   const [errorMsg, setErrorMsg] = useState("");
 
   // 🔹 CHANGE THIS to your actual Make webhook URL
-  const FORM_ENDPOINT = "https://hook.eu1.make.com/40m3br14et5jx4yeqru3j6s1cfmhoj53;
+  const FORM_ENDPOINT = "https://hook.eu1.make.com/40m3br14et5jx4yeqru3j6s1cfmhoj53";
 
   // This is your existing preview PDF
   const PREVIEW_URL = "/preview/Borderless-by-Design-Preview.pdf";
